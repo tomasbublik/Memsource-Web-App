@@ -29,13 +29,13 @@ public class ProjectResponseModel {
 
     public static class ProjectModel {
 
-        private String name;
+        private final String name;
 
-        private String sourceLanguage;
+        private final String sourceLanguage;
 
-        private String targetLanguage;
+        private final String targetLanguage;
 
-        private String status;
+        private final String status;
 
         public ProjectModel(String name, String sourceLanguage, String targetLanguage, String status) {
             this.name = name;

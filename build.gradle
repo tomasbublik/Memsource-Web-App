@@ -13,8 +13,8 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 jar {
-    baseName = 'gs-actuator-service'
-    version = '0.1.0'
+    baseName = 'memsource-web-app'
+    version = '0.1.1'
 }
 
 sourceCompatibility = 1.8
@@ -41,4 +41,5 @@ dependencies {
     testCompile("junit:junit")
     testCompile ("org.assertj:assertj-core:3.6.2")
     testCompile ("com.squareup.okhttp3:mockwebserver:3.8.0")
+    testCompile ("org.mockito:mockito-core:1.10.19")
 }

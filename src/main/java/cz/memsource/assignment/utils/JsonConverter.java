@@ -2,11 +2,9 @@ package cz.memsource.assignment.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.memsource.assignment.api.MemsourceOwnerId;
-import cz.memsource.assignment.api.MemsourceProjectResponse;
+import cz.memsource.assignment.api.*;
 import cz.memsource.assignment.exceptions.ValidationException;
-import cz.memsource.assignment.api.MemsourceLogin;
-import cz.memsource.assignment.api.MemsourceLoginResponse;
+import cz.memsource.assignment.model.ProjectResponseModel;
 
 import java.io.IOException;
 
@@ -15,7 +13,7 @@ import static cz.memsource.assignment.utils.ValidationUtils.validateUsernameAndP
 
 public class JsonConverter {
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     public static String createLoginJson(String userName, String password, String code) throws ValidationException, JsonProcessingException {
         validateUsernameAndPassword(userName, password);
@@ -46,5 +44,19 @@ public class JsonConverter {
     public static MemsourceProjectResponse createProjectResponse(String response) throws IOException, ValidationException {
         validateParameter(response, "Response JSON cannot be empty");
         return mapper.readValue(response, MemsourceProjectResponse.class);
+    }
+
+    public static ProjectResponseModel createProjectResponseModel(String response) throws IOException, ValidationException {
+        MemsourceProjectResponse memsourceProjectResponse = createProjectResponse(response);
+        if (memsourceProjectResponse.getProjects().isEmpty()) {
+            return new ProjectResponseModel("Projects list is empty: " + response);
+        } else {
+            ProjectResponseModel projectResponseModel = new ProjectResponseModel();
+
+            for (Project project : memsourceProjectResponse.getProjects()) {
+                projectResponseModel.addProject(new ProjectResponseModel.ProjectModel(project.getName(), project.getSourceLang(), project.getTargetLangsString(), project.getStatus()));
+            }
+            return projectResponseModel;
+        }
     }
 }

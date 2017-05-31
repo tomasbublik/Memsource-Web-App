@@ -14,8 +14,8 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class MemsourceServiceTest {
 
-    public static final String ANY_URL = "/get/something";
-    public static final String TEST_RESPONSE = "some response";
+    private static final String ANY_URL = "/get/something";
+    private static final String TEST_RESPONSE = "some response";
     private MemsourceServiceImpl classUnderTest;
 
     private MockWebServer server;
@@ -37,7 +37,7 @@ public class MemsourceServiceTest {
 
     @Test
     public void shouldReturnResponseWhenUrlIsProvided() throws IOException {
-        String response = classUnderTest.doPostRequest(server.url(ANY_URL).toString(), "", new HashMap<String, String>());
+        String response = classUnderTest.doPostRequest(server.url(ANY_URL).toString(), "", new HashMap<>());
 
         assertThat(response).isNotNull();
         assertThat(response).isEqualTo(TEST_RESPONSE);
@@ -46,7 +46,7 @@ public class MemsourceServiceTest {
 
     @Test
     public void shouldContinueWhenWrongJsonIsProvided() throws IOException {
-        String response = classUnderTest.doPostRequest(server.url(ANY_URL).toString(), "123456789", new HashMap<String, String>());
+        String response = classUnderTest.doPostRequest(server.url(ANY_URL).toString(), "123456789", new HashMap<>());
 
         assertThat(response).isNotNull();
         assertThat(response).isEqualTo(TEST_RESPONSE);
@@ -54,15 +54,11 @@ public class MemsourceServiceTest {
 
     @Test
     public void shouldThrowNullPointerExceptionWhenNoJsonIsProvided() throws IOException {
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> {
-            classUnderTest.doPostRequest(server.url(ANY_URL).toString(), null, new HashMap<String, String>());
-        });
+        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> classUnderTest.doPostRequest(server.url(ANY_URL).toString(), null, new HashMap<String, String>()));
     }
 
     @Test
     public void shouldThrowErrorWhenUnexpectedUrlIsProvided() throws IOException {
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> {
-            classUnderTest.doPostRequest(ANY_URL, "", new HashMap<String, String>());
-        });
+        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> classUnderTest.doPostRequest(ANY_URL, "", new HashMap<>()));
     }
 }

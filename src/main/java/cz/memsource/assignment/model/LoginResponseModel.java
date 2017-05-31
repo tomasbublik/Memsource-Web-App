@@ -6,8 +6,8 @@ public class LoginResponseModel {
 
     private String reason;
 
-    public LoginResponseModel(boolean success) {
-        this.success = success;
+    public LoginResponseModel() {
+        this.success = true;
         this.reason = "";
     }
 

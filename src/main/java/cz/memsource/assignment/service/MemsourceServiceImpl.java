@@ -11,11 +11,11 @@ import static cz.memsource.assignment.utils.Const.JSON;
 @Service
 public class MemsourceServiceImpl implements MemsourceService {
 
-    private OkHttpClient memsourceClient = new OkHttpClient();
+    private final OkHttpClient memsourceClient = new OkHttpClient();
 
     public String doPostRequest(String urlAddress, String json, Map<String, String> parameters) throws IOException {
         String url = buildUrl(urlAddress, parameters);
-        
+
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url(url)
@@ -45,8 +45,8 @@ public class MemsourceServiceImpl implements MemsourceService {
 
     private void addParameters(Map<String, String> parameters, HttpUrl.Builder urlBuilder) {
         if (parameters != null && !parameters.isEmpty()) {
-            for (String key : parameters.keySet()) {
-                urlBuilder.addQueryParameter(key, parameters.get(key));
+            for (Map.Entry<String, String> entry : parameters.entrySet()) {
+                urlBuilder.addQueryParameter(entry.getKey(), entry.getValue());
             }
         }
     }

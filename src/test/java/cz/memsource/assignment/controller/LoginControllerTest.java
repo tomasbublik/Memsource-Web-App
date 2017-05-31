@@ -78,7 +78,7 @@ public class LoginControllerTest {
         final HashMap<String, String> parameters = new HashMap<>();
         parameters.put(MEMSOURCE_API_USER_NAME, FAKE_USERNAME);
         parameters.put(MEMSOURCE_API_PASSWORD, FAKE_PASSWORD);
-        String loginResponseJson = null;
+        String loginResponseJson;
         if (positive) {
             loginResponseJson = "{\"user\":{\"id\":202950,\"firstName\":\"Tom\\u00e1\\u0161\",\"lastName\":\"Bubl\\u00edk\",\"userName\":\"tomas.bublik@gmail.com\",\"email\":\"tomas.bublik@gmail.com\",\"role\":\"ADMIN\",\"timezone\":\"Europe/London\",\"active\":true,\"deleted\":false,\"terminologist\":false,\"dateCreated\":\"2017-05-23T08:54:46+0000\"},\"token\":\"0jDBXpHMhFULVqCvxiYg1j7SSKZGHX7vyJE01w5EBIBPI6D9EfaEyGFRAyJGEOaDd\",\"expires\":\"2017-05-27T05:59:26+0000\"}";
         } else {
@@ -86,5 +86,4 @@ public class LoginControllerTest {
         }
         given(this.memsourceService.doGetRequest(MEMSOURCE_LOGIN_URL, parameters)).willReturn(loginResponseJson);
     }
-
 }

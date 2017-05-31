@@ -42,7 +42,7 @@ public class LoginController extends BaseController {
             return new LoginResponseModel(false, "User is not logged in, username or password cannot be empty");
         }
 
-        String response = null;
+        String response;
         try {
             response = memsourceService.doGetRequest(MEMSOURCE_LOGIN_URL, createParametersMap(name, password));
             MemsourceLoginResponse memsourceLoginResponse = JsonConverter.createLoginResponse(response);
@@ -55,7 +55,7 @@ public class LoginController extends BaseController {
             return new LoginResponseModel(false, "JSON parsing error occurred");
         }
 
-        return new LoginResponseModel(true);
+        return new LoginResponseModel();
     }
 
     private HashMap createParametersMap(String name, String password) {

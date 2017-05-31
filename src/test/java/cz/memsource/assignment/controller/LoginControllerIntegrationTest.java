@@ -21,6 +21,8 @@ import static org.springframework.http.HttpStatus.OK;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LoginControllerIntegrationTest {
 
+    private static final String USER_NOT_LOGGED_RESPONSE = "{success=false, reason=User is not logged in, username or password cannot be empty}";
+    
     @LocalServerPort
     private int port;
 
@@ -35,11 +37,12 @@ public class LoginControllerIntegrationTest {
     }
 
     @Test
-    public void shouldReturn200WhenSendingRequestToController() throws Exception {
+    public void shouldReturn200WhenSendingRequestToLoginController() throws Exception {
         @SuppressWarnings("rawtypes")
         ResponseEntity<Map> entity = this.testRestTemplate.getForEntity(localLoginUrl, Map.class);
 
         assertThat(entity.getStatusCode()).isEqualTo(OK);
+        assertThat(entity.getBody().toString()).isEqualTo(USER_NOT_LOGGED_RESPONSE);
     }
 
 }

@@ -1,7 +1,5 @@
 package cz.memsource.assignment.controller;
 
-import cz.memsource.assignment.api.MemsourceProjectResponse;
-import cz.memsource.assignment.api.Project;
 import cz.memsource.assignment.exceptions.ValidationException;
 import cz.memsource.assignment.model.ProjectResponseModel;
 import cz.memsource.assignment.service.MemsourceService;
@@ -38,10 +36,10 @@ public class ProjectsController extends BaseController {
             return new ProjectResponseModel("User is not logged in");
         }
 
-        String response = null;
+        String response;
         try {
             response = memsourceService.doPostRequest(MEMSOURCE_PROJECTS_URL, JsonConverter.createOwnerIdJson(getOwnerId(session)), createParametersMap(session));
-            return createProjectResponse(response);
+            return JsonConverter.createProjectResponseModel(response);
         } catch (IOException e) {
             e.printStackTrace();
             return new ProjectResponseModel("IO error occurred");
@@ -55,19 +53,5 @@ public class ProjectsController extends BaseController {
         HashMap parametersMap = new HashMap();
         parametersMap.put(MEMSOURCE_API_TOKEN, getToken(session));
         return parametersMap;
-    }
-
-    private ProjectResponseModel createProjectResponse(String response) throws IOException, ValidationException {
-        MemsourceProjectResponse memsourceProjectResponse = JsonConverter.createProjectResponse(response);
-        if (memsourceProjectResponse.getProjects().isEmpty()) {
-            return new ProjectResponseModel("Projects list is empty: " + response);
-        } else {
-            ProjectResponseModel projectResponseModel = new ProjectResponseModel();
-
-            for (Project project : memsourceProjectResponse.getProjects()) {
-                projectResponseModel.addProject(new ProjectResponseModel.ProjectModel(project.getName(), project.getSourceLang(), project.getTargetLangsString(), project.getStatus()));
-            }
-            return projectResponseModel;
-        }
     }
 }

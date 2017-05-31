@@ -2,7 +2,7 @@ package cz.memsource.assignment.api;
 
 public class MemsourceOwnerId {
 
-    private String ownerId;
+    private final String ownerId;
 
     public MemsourceOwnerId(String ownerId) {
         this.ownerId = ownerId;
