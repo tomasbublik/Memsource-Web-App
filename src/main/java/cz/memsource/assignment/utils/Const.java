@@ -12,6 +12,8 @@ public class Const {
 
     private static final String HTTPS_MEMSOURCE = "https://cloud.memsource.com";
     public static final String HTTP_LOCALHOST = "http://localhost";
+    public static final String CLIENT_URL = "http://localhost:4200";
+
     public static final String MEMSOURCE_LOGIN_URL = HTTPS_MEMSOURCE + "/web/api/v3/auth/login";
     public static final String MEMSOURCE_PROJECTS_URL = HTTPS_MEMSOURCE + "/web/api/v4/project/list";
     public static final String ENDPOINT_LOGIN_MAPPING = "/api/v1/log";

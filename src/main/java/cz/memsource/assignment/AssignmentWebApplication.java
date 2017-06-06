@@ -10,4 +10,16 @@ public class AssignmentWebApplication {
         SpringApplication.run(AssignmentWebApplication.class, args);
     }
 
+/*
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping(ENDPOINT_LOGIN_MAPPING).allowedOrigins(CLIENT_URL);
+                registry.addMapping(ENDPOINT_PROJECTS_MAPPING).allowedOrigins(CLIENT_URL);
+            }
+        };
+    }
+*/
 }
